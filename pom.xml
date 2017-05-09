@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.n52</groupId>
+        <artifactId>parent</artifactId>
+        <version>7</version>
+    </parent>
+    <groupId>org.n52.series-api</groupId>
+    <artifactId>series-rest-api-cache</artifactId>
+    <name>Series REST API - Caching module</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <organization>
+        <name>52North Initiative for Geospatial Open Source Software GmbH</name>
+        <url>http://52north.org</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>antego</id>
+            <name>Anton Egorov</name>
+            <email>a.egorov@52north.org</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 2.0</name>
+            <url>http://www.gnu.de/documents/gpl-2.0.en.html</url>
+        </license>
+    </licenses>
+
+
+</project>
