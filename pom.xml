@@ -11,8 +11,7 @@
     <artifactId>series-rest-api-cache</artifactId>
     <name>Series REST API - Caching module</name>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
+    <packaging>jar</packaging>
 
     <organization>
         <name>52North Initiative for Geospatial Open Source Software GmbH</name>
@@ -34,5 +33,47 @@
         </license>
     </licenses>
 
+    <properties>
+        <logback.version>1.1.3</logback.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <servlet-api.version>3.0.1</servlet-api.version>
+        <junit.verion>4.12</junit.verion>
+
+        <java.compiler.source>1.8</java.compiler.source>
+        <java.compiler.target>1.8</java.compiler.target>
+        <file.encoding>UTF-8</file.encoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.verion}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
