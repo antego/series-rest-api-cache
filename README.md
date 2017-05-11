@@ -1,5 +1,2 @@
-# Cache for Series REST API
-A caching module for Series REST API.
-
-
-
+# series-rest-api-cache
+a module providing cache management for series data
