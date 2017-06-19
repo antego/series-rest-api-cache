@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface DataCache {
     boolean isDataCached(RequestParameterSet parameters);
+
     Optional<DataCollection<Data<AbstractValue< ? >>>> getData(RequestParameterSet parameters);
+    
     void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue< ? >>> data);
 
 }
