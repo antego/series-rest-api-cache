@@ -1,0 +1,30 @@
+Copyright 2013 52°North Initiative for Geospatial Open Source Software GmbH
+
+Licensed under GNU General Public License, Version 2.0
+
+This project includes: 
+  Apache Commons Logging under The Apache Software License, Version 2.0
+  API interfaces under GNU Lesser General Public License (LGPL) version 2.1
+  Commons IO under The Apache Software License, Version 2.0
+  Commons Pool under The Apache Software License, Version 2.0
+  EJML under The Apache Software License, Version 2.0
+  EPSG Authority Service using HSQL database under GNU Lesser General Public License (LGPL) version 2.1
+  HyperSQL Database under HSQLDB License, a BSD open source license
+  Jackson-annotations under The Apache Software License, Version 2.0
+  Jackson-core under The Apache Software License, Version 2.0
+  jackson-databind under The Apache Software License, Version 2.0
+  Java implementation of GeographicLib under The MIT License(MIT)
+  jgridshift under GNU Lesser General Public License, version 2.0 (LGPLv2)
+  Joda-Time under Apache 2
+  jsr-275 under BSD License
+  JTS Topology Suite under Lesser General Public License (LGPL)
+  Logback Classic Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
+  Logback Core Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
+  Metadata under GNU Lesser General Public License (LGPL) version 2.1
+  Open GIS Interfaces under GNU Lesser General Public License (LGPL) version 2.1
+  Referencing services under GNU Lesser General Public License (LGPL) version 2.1
+  Series REST API - Caching module under The Apache Software License, Version 2.0
+  Series REST API - SPI module under GNU General Public License, Version 2.0
+  SLF4J API Module under MIT License
+  Spring Core under The Apache Software License, Version 2.0
+
