@@ -45,6 +45,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.22</version>
         </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-embedded</artifactId>
+            <version>9.0.1.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
