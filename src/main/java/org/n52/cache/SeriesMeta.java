@@ -27,48 +27,38 @@
  * for more details.
  */
 package org.n52.cache;
-
-import org.infinispan.Cache;
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
-import org.joda.time.Interval;
+import org.hibernate.search.annotations.*;
 import org.n52.io.request.RequestParameterSet;
-import org.n52.io.response.dataset.AbstractValue;
-import org.n52.io.response.dataset.Data;
-import org.n52.io.response.dataset.DataCollection;
 
-import java.util.Optional;
+@Indexed
+public class SeriesMeta {
+    private RequestParameterSet parameters;
 
-public class InfinispanDataCache implements DataCache {
-    EmbeddedCacheManager cacheManager;
-    Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
+    @Field private long seriesStart;
 
-    public void initCache() {
-        cacheManager = new DefaultCacheManager();
-        cache = cacheManager.getCache();
+    @Field private long seriesEnd;
+
+    public RequestParameterSet getParameters() {
+        return parameters;
     }
 
-    public void stopCache() {
-        cacheManager.stop();
+    public void setParameters(RequestParameterSet parameters) {
+        this.parameters = parameters;
     }
 
-    @Override
-    public boolean isDataCached(RequestParameterSet parameters) {
-        return false;
+    public long getSeriesStart() {
+        return seriesStart;
     }
 
-    @Override
-    public Optional<DataCollection<Data<AbstractValue<?>>>> getData(RequestParameterSet parameters) {
-        return null;
+    public void setSeriesStart(long seriesStart) {
+        this.seriesStart = seriesStart;
     }
 
-    @Override
-    public void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue<?>>> data) {
-        SeriesMeta meta = new SeriesMeta();
-        meta.setParameters(parameters);
-        Interval timespan = Interval.parse(parameters.getTimespan());
-        meta.setSeriesStart(timespan.getStartMillis());
-        meta.setSeriesStart(timespan.getEndMillis());
-        cache.put(meta, data);
+    public long getSeriesEnd() {
+        return seriesEnd;
+    }
+
+    public void setSeriesEnd(long seriesEnd) {
+        this.seriesEnd = seriesEnd;
     }
 }
