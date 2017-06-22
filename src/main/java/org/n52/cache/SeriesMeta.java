@@ -28,6 +28,7 @@
  */
 package org.n52.cache;
 import org.hibernate.search.annotations.*;
+import org.joda.time.Interval;
 import org.n52.io.request.RequestParameterSet;
 
 @Indexed
@@ -37,6 +38,16 @@ public class SeriesMeta {
     @Field private long seriesStart;
 
     @Field private long seriesEnd;
+
+    public SeriesMeta() {
+    }
+
+    public SeriesMeta(RequestParameterSet parameters) {
+        this.parameters = parameters;
+        Interval interval = Interval.parse(parameters.getTimespan());
+        seriesStart = interval.getStartMillis();
+        seriesEnd = interval.getEndMillis();
+    }
 
     public RequestParameterSet getParameters() {
         return parameters;
@@ -60,5 +71,25 @@ public class SeriesMeta {
 
     public void setSeriesEnd(long seriesEnd) {
         this.seriesEnd = seriesEnd;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SeriesMeta)) return false;
+
+        SeriesMeta that = (SeriesMeta) o;
+
+        if (seriesStart != that.seriesStart) return false;
+        if (seriesEnd != that.seriesEnd) return false;
+        return parameters != null ? parameters.equals(that.parameters) : that.parameters == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = parameters != null ? parameters.hashCode() : 0;
+        result = 31 * result + (int) (seriesStart ^ (seriesStart >>> 32));
+        result = 31 * result + (int) (seriesEnd ^ (seriesEnd >>> 32));
+        return result;
     }
 }

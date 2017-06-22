@@ -36,10 +36,14 @@ import org.n52.io.request.RequestParameterSet;
 import org.n52.io.response.dataset.AbstractValue;
 import org.n52.io.response.dataset.Data;
 import org.n52.io.response.dataset.DataCollection;
+import org.infinispan.query.Search;
+import org.infinispan.query.dsl.QueryFactory;
+import org.infinispan.query.dsl.Query;
 
+import java.util.List;
 import java.util.Optional;
 
-public class InfinispanDataCache implements DataCache {
+public class InfinispanDataCache extends DataCache {
     EmbeddedCacheManager cacheManager;
     Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
 
@@ -54,6 +58,16 @@ public class InfinispanDataCache implements DataCache {
 
     @Override
     public boolean isDataCached(RequestParameterSet parameters) {
+        Interval searchInterval = Interval.parse(parameters.getTimespan());
+        long startTime = searchInterval.getStartMillis();
+        long endTime = searchInterval.getEndMillis();
+        QueryFactory qf = Search.getQueryFactory(cache);
+        Query query = qf.from(SeriesMeta.class).having("seriesStart")
+                .lte(startTime).and().having("seriesEnd").gte(endTime)
+                .toBuilder().build();
+
+        List<SeriesMeta> results = query.list();
+        System.out.println("Found " + results.size() + " matches");
         return false;
     }
 

@@ -51,6 +51,11 @@
             <version>8.2.6.Final</version>
         </dependency>
         <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-query</artifactId>
+            <version>8.2.6.Final</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-engine</artifactId>
             <version>5.7.1.Final</version>
