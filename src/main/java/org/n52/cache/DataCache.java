@@ -46,7 +46,7 @@ public abstract class DataCache {
 
     abstract void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue< ? >>> data);
 
-    private boolean compareParameters(RequestParameterSet parametersA, RequestParameterSet parametersB) {
+    protected boolean compareParameters(RequestParameterSet parametersA, RequestParameterSet parametersB) {
         for (String paramName : matchingParameters) {
             String[] argumentsA = parametersA.getAsStringArray(paramName);
             String[] argumentsB = parametersB.getAsStringArray(paramName);

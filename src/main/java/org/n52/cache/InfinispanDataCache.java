@@ -39,11 +39,14 @@ import org.n52.io.response.dataset.DataCollection;
 import org.infinispan.query.Search;
 import org.infinispan.query.dsl.QueryFactory;
 import org.infinispan.query.dsl.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 public class InfinispanDataCache extends DataCache {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfinispanDataCache.class);
     private EmbeddedCacheManager cacheManager;
     private Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
 
@@ -67,7 +70,12 @@ public class InfinispanDataCache extends DataCache {
                 .toBuilder().build();
 
         List<SeriesMeta> results = query.list();
-        System.out.println("Found " + results.size() + " matches");
+        LOGGER.debug("Found {} timespan matches", results.size());
+        for (SeriesMeta meta : results) {
+            if (compareParameters(meta.getParameters(), parameters)) {
+                return true;
+            }
+        }
         return false;
     }
 
