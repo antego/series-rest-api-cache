@@ -44,8 +44,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class InfinispanDataCache extends DataCache {
-    EmbeddedCacheManager cacheManager;
-    Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
+    private EmbeddedCacheManager cacheManager;
+    private Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
 
     public void initCache() {
         cacheManager = new DefaultCacheManager();
@@ -73,7 +73,7 @@ public class InfinispanDataCache extends DataCache {
 
     @Override
     public Optional<DataCollection<Data<AbstractValue<?>>>> getData(RequestParameterSet parameters) {
-        return null;
+        return Optional.empty();
     }
 
     @Override

@@ -33,19 +33,29 @@ import org.n52.io.response.dataset.AbstractValue;
 import org.n52.io.response.dataset.Data;
 import org.n52.io.response.dataset.DataCollection;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public abstract class DataCache {
     private String[] matchingParameters = {"expanded", "format", "platformTypes",
             "datasetTypes", "services", "platforms", "categories", "phenomena", "station"};
+
     abstract boolean isDataCached(RequestParameterSet parameters);
 
     abstract Optional<DataCollection<Data<AbstractValue< ? >>>> getData(RequestParameterSet parameters);
 
     abstract void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue< ? >>> data);
 
-    //todo add comparison
-    private boolean compareParameters(RequestParameterSet set1, RequestParameterSet set2) {
-        return false;
+    private boolean compareParameters(RequestParameterSet parametersA, RequestParameterSet parametersB) {
+        for (String paramName : matchingParameters) {
+            String[] argumentsA = parametersA.getAsStringArray(paramName);
+            String[] argumentsB = parametersB.getAsStringArray(paramName);
+            Arrays.sort(argumentsA);
+            Arrays.sort(argumentsB);
+            if (!Arrays.equals(argumentsA, argumentsB)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

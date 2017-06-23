@@ -27,7 +27,8 @@
  * for more details.
  */
 package org.n52.cache;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.joda.time.Interval;
 import org.n52.io.request.RequestParameterSet;
 
@@ -75,13 +76,21 @@ public class SeriesMeta {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SeriesMeta)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SeriesMeta)) {
+            return false;
+        }
 
         SeriesMeta that = (SeriesMeta) o;
 
-        if (seriesStart != that.seriesStart) return false;
-        if (seriesEnd != that.seriesEnd) return false;
+        if (seriesStart != that.seriesStart) {
+            return false;
+        }
+        if (seriesEnd != that.seriesEnd) {
+            return false;
+        }
         return parameters != null ? parameters.equals(that.parameters) : that.parameters == null;
     }
 
