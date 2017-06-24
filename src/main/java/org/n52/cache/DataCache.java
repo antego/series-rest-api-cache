@@ -28,17 +28,37 @@
  */
 package org.n52.cache;
 
+import org.n52.io.request.Parameters;
 import org.n52.io.request.RequestParameterSet;
 import org.n52.io.response.dataset.AbstractValue;
 import org.n52.io.response.dataset.Data;
 import org.n52.io.response.dataset.DataCollection;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class DataCache {
-    private String[] matchingParameters = {"expanded", "format", "platformTypes",
-            "datasetTypes", "services", "platforms", "categories", "phenomena", "station"};
+    private String[] matchingParameters = {
+            Parameters.EXPANDED,
+            Parameters.FORMAT,
+            Parameters.FILTER_PLATFORM_TYPES,
+            Parameters.FILTER_VALUE_TYPES,
+            Parameters.SERVICES,
+            Parameters.PLATFORMS,
+            Parameters.CATEGORIES,
+            Parameters.PHENOMENA,
+            Parameters.STATIONS,
+    };
+
+    private Map<String, String> defaultValues = new HashMap<>();
+
+    {
+        defaultValues.put(Parameters.EXPANDED, Boolean.toString(Parameters.DEFAULT_EXPANDED));
+        defaultValues.put(Parameters.FILTER_PLATFORM_TYPES, "stationary,insitu");
+        defaultValues.put(Parameters.FILTER_VALUE_TYPES, "quantity");
+    }
 
     abstract boolean isDataCached(RequestParameterSet parameters);
 
@@ -46,16 +66,45 @@ public abstract class DataCache {
 
     abstract void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue< ? >>> data);
 
-    protected boolean compareParameters(RequestParameterSet parametersA, RequestParameterSet parametersB) {
+    protected boolean compareParameterSets(RequestParameterSet parametersA, RequestParameterSet parametersB) {
         for (String paramName : matchingParameters) {
-            String[] argumentsA = parametersA.getAsStringArray(paramName);
-            String[] argumentsB = parametersB.getAsStringArray(paramName);
-            Arrays.sort(argumentsA);
-            Arrays.sort(argumentsB);
-            if (!Arrays.equals(argumentsA, argumentsB)) {
+            if (compareParameter(parametersA, parametersB, paramName)) {
+                continue;
+            } else {
                 return false;
             }
         }
         return true;
+    }
+
+    protected boolean compareParameter(RequestParameterSet parametersA,
+                                       RequestParameterSet parametersB,
+                                       String paramName) {
+        if (parametersA.containsParameter(paramName) &&
+                !parametersB.containsParameter(paramName)) {
+            if (defaultValues.containsKey(paramName)) {
+                return compareParameterValues(parametersA.getAsString(paramName), defaultValues.get(paramName));
+            }
+            return false;
+        }
+        if (parametersB.containsParameter(paramName) &&
+                !parametersA.containsParameter(paramName)) {
+            if (defaultValues.containsKey(paramName)) {
+                return compareParameterValues(parametersB.getAsString(paramName), defaultValues.get(paramName));
+            }
+            return false;
+        }
+        if (!parametersA.containsParameter(paramName) && !parametersB.containsParameter(paramName)) {
+            return true;
+        }
+        return compareParameterValues(parametersA.getAsString(paramName), parametersA.getAsString(paramName));
+    }
+
+    protected boolean compareParameterValues(String valueA, String valueB) {
+        String[] argumentsA = valueA.split(",");
+        String[] argumentsB = valueB.split(",");
+        Arrays.sort(argumentsA);
+        Arrays.sort(argumentsB);
+        return Arrays.equals(argumentsA, argumentsB);
     }
 }

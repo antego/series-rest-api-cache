@@ -72,7 +72,7 @@ public class InfinispanDataCache extends DataCache {
         List<SeriesMeta> results = query.list();
         LOGGER.debug("Found {} timespan matches", results.size());
         for (SeriesMeta meta : results) {
-            if (compareParameters(meta.getParameters(), parameters)) {
+            if (compareParameterSets(meta.getParameters(), parameters)) {
                 return true;
             }
         }
