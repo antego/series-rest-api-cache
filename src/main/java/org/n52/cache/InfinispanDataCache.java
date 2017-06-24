@@ -49,6 +49,7 @@ public class InfinispanDataCache extends DataCache {
     private static final Logger LOGGER = LoggerFactory.getLogger(InfinispanDataCache.class);
     private EmbeddedCacheManager cacheManager;
     private Cache<SeriesMeta, DataCollection<Data<AbstractValue<?>>>> cache;
+    private RequestParametersComparator comparator = new RequestParametersComparator();
 
     public void initCache() {
         cacheManager = new DefaultCacheManager();
@@ -72,7 +73,7 @@ public class InfinispanDataCache extends DataCache {
         List<SeriesMeta> results = query.list();
         LOGGER.debug("Found {} timespan matches", results.size());
         for (SeriesMeta meta : results) {
-            if (compareParameterSets(meta.getParameters(), parameters)) {
+            if (comparator.compareParameterSets(meta.getParameters(), parameters)) {
                 return true;
             }
         }

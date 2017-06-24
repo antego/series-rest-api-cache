@@ -28,20 +28,36 @@
  */
 package org.n52.cache;
 
-import org.n52.io.request.RequestParameterSet;
-import org.n52.io.response.dataset.AbstractValue;
-import org.n52.io.response.dataset.Data;
-import org.n52.io.response.dataset.DataCollection;
+import org.junit.Assert;
+import org.junit.Test;
+import org.n52.io.request.Parameters;
+import org.n52.io.request.RequestSimpleParameterSet;
 
+import java.io.IOException;
 
-import java.util.Optional;
+public class RequestParametersComparatorTest {
+    private RequestParametersComparator comparator = new RequestParametersComparator();
 
-public abstract class DataCache {
+    @Test
+    public void shouldReturnTrueIfDefaultValueAndEmptyValue() throws IOException {
+        RequestSimpleParameterSet set1 = new RequestSimpleParameterSet();
+        set1.setParameter(Parameters.FILTER_PLATFORM_TYPES, "stationary,insitu");
 
-    abstract boolean isDataCached(RequestParameterSet parameters);
+        RequestSimpleParameterSet set2 = new RequestSimpleParameterSet();
 
-    abstract Optional<DataCollection<Data<AbstractValue< ? >>>> getData(RequestParameterSet parameters);
+        Assert.assertTrue(comparator.compareParameterSets(set1, set2));
+        Assert.assertTrue(comparator.compareParameterSets(set2, set1));
+    }
 
-    abstract void putDataForParameters(RequestParameterSet parameters, DataCollection<Data<AbstractValue< ? >>> data);
+    @Test
+    public void shouldReturnTrueOnDifferentValueOrder() throws IOException {
+        RequestSimpleParameterSet set1 = new RequestSimpleParameterSet();
+        set1.setParameter(Parameters.SERVICES, "srv1, srv2");
 
+        RequestSimpleParameterSet set2 = new RequestSimpleParameterSet();
+        set2.setParameter(Parameters.SERVICES, "srv2, srv1");
+
+        Assert.assertTrue(comparator.compareParameterSets(set1, set2));
+        Assert.assertTrue(comparator.compareParameterSets(set2, set1));
+    }
 }
