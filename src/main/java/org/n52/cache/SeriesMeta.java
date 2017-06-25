@@ -34,6 +34,8 @@ import org.n52.io.request.RequestParameterSet;
 
 @Indexed
 public class SeriesMeta {
+    public static final String SERIES_END_FIELD = "seriesEnd";
+    public static final String SERIES_START_FIELD = "seriesStart";
     private RequestParameterSet parameters;
 
     @Field private long seriesStart;
